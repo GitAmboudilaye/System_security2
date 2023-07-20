@@ -67,6 +67,6 @@ class View(tk.Tk):
         #self.alert.stop_flag = False  t
         #self.alert.toggle_color()
 root = View()
-#root.alert = Alert(root)
+        #pull_up=True is_active=False
 root.mainloop()
 

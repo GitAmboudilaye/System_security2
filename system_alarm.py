@@ -1,6 +1,7 @@
 from time import sleep
 from gpiozero import LED, Button
 from show_number import Show_Number 
+from alarm_request import Alarm_Requests
 #from view import View
 
 """class Alert():
@@ -30,7 +31,8 @@ class Alam:
         self.__zone4 = Button(zone4)
         self.__armer = Button(armer)
         self.status = False
-        self.show_numb = Show_Number(14, 15, 18, 23, 24, 25, 8)  
+        self.show_numb = Show_Number(14, 15, 18, 23, 24, 25, 8) 
+        
         #self.alert = Alert
 
     @property
@@ -87,6 +89,9 @@ class Alam:
                 sleep(0.5)  # Pause pendant 0.5 seconde
             self.show_numb.show_number(10)
             self.status = True
+            alarm_requests = Alarm_Requests(0, 0, 0, 0, self.status)
+            alarm_requests.send_requests()
+
 
     def disarm_system(self):
         if self.status == True:
@@ -95,6 +100,8 @@ class Alam:
                 sleep(0.5)  # Pause pendant 0.5 seconde
             self.show_numb.show_number(0)
             self.status = False
+            alarm_requests = Alarm_Requests(0, 0, 0, 0, self.status)
+            alarm_requests.send_requests()
     def lancement(self):
         if self.status == False:
             self.arm_system()
@@ -103,21 +110,43 @@ class Alam:
     def check_zone1(self):
         if self.status == True and self.zone1.is_pressed:
             self.show_numb.show_number(1)
-            self.alert.toggle_color
+            print(666)
+            alarm_requests = Alarm_Requests(1, 0, 0, 0, self.status)
+            alarm_requests.send_requests()
+            #self.al_resq(self.zone1, self.zone2, self.zone3, self.zone4, self.status).send_requests()
+            #self.alert.toggle_color
         elif self.status == True:
+            
             self.show_numb.show_number(1)
+           
+            alarm_requests = Alarm_Requests(1, 0, 0, 0, self.status)
+            alarm_requests.send_requests()
+
     def check_zone2(self):
         if self.status == True and self.zone2.is_pressed:
             self.show_numb.show_number(2)
+            alarm_requests = Alarm_Requests(0, 1, 0, 0, self.status)
+            alarm_requests.send_requests()
         elif self.status == True:
             self.show_numb.show_number(2)
+            alarm_requests = Alarm_Requests(0, 1, 0, 0, self.status)
+            alarm_requests.send_requests()
+            
     def check_zone3(self):
         if self.status == True and self.zone3.is_pressed:
             self.show_numb.show_number(3)
+            alarm_requests = Alarm_Requests(0, 0, 1, 0, self.status)
+            alarm_requests.send_requests()
         elif self.status == True:
             self.show_numb.show_number(3)
+            alarm_requests = Alarm_Requests(0, 0, 1, 0, self.status)
+            alarm_requests.send_requests()
     def check_zone4(self):
         if self.status == True and self.zone4.is_pressed:
             self.show_numb.show_number(4)
+            alarm_requests = Alarm_Requests(0, 0, 0, 1, self.status)
+            alarm_requests.send_requests()
         elif self.status == True:
             self.show_numb.show_number(4)
+            alarm_requests = Alarm_Requests(0, 0, 0, 1, self.status)
+            alarm_requests.send_requests()
